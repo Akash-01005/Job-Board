@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import Header from '../components/Header.jsx';
 
 const Home = () => {
+  const { user } = useAuth();
+
   return (
     <div>
       <Header />
@@ -44,7 +47,7 @@ const Home = () => {
                 San Francisco, CA
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-lg font-semibold text-indigo-600">$120k - $150k</span>
+                <span className="text-lg font-semibold text-indigo-600">₹12,00,000 - ₹15,00,000</span>
                 <Link
                   to="/jobs/1"
                   className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors"
@@ -78,7 +81,7 @@ const Home = () => {
                 New York, NY
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-lg font-semibold text-indigo-600">$90k - $120k</span>
+                <span className="text-lg font-semibold text-indigo-600">₹9,00,000 - ₹12,00,000</span>
                 <Link
                   to="/jobs/2"
                   className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors"
@@ -112,7 +115,7 @@ const Home = () => {
                 Austin, TX
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-lg font-semibold text-indigo-600">$100k - $130k</span>
+                <span className="text-lg font-semibold text-indigo-600">₹10,00,000 - ₹13,00,000</span>
                 <Link
                   to="/jobs/3"
                   className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors"
@@ -202,18 +205,47 @@ const Home = () => {
             Join thousands of professionals who have found their dream jobs through our platform.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/signup"
-              className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-indigo-50 transition-colors"
-            >
-              Get Started Today
-            </Link>
-            <Link
-              to="/jobs"
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-colors"
-            >
-              Browse Jobs
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  to="/jobs"
+                  className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-indigo-50 transition-colors"
+                >
+                  Browse Jobs
+                </Link>
+                {user.role === 'employer' && (
+                  <Link
+                    to="/post-job"
+                    className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-colors"
+                  >
+                    Post a Job
+                  </Link>
+                )}
+                {user.role === 'candidate' && (
+                  <Link
+                    to="/dashboard"
+                    className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-colors"
+                  >
+                    View Dashboard
+                  </Link>
+                )}
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/signup"
+                  className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-indigo-50 transition-colors"
+                >
+                  Get Started Today
+                </Link>
+                <Link
+                  to="/jobs"
+                  className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-colors"
+                >
+                  Browse Jobs
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>

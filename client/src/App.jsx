@@ -6,6 +6,10 @@ import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import Dashboard from './pages/Dashboard.jsx';
+import Jobs from './pages/Jobs.jsx';
+import JobDetail from './pages/JobDetail.jsx';
+import PostJob from './pages/PostJob.jsx';
+import Profile from './pages/Profile.jsx';
 
 const App = () => {
   return (
@@ -17,6 +21,16 @@ const App = () => {
             <Route path="/" element={
               <Layout>
                 <Home />
+              </Layout>
+            } />
+            <Route path="/jobs" element={
+              <Layout>
+                <Jobs />
+              </Layout>
+            } />
+            <Route path="/jobs/:id" element={
+              <Layout>
+                <JobDetail />
               </Layout>
             } />
             
@@ -36,6 +50,16 @@ const App = () => {
             <Route path="/dashboard" element={
               <Layout>
                 <Dashboard />
+              </Layout>
+            } />
+            <Route path="/post-job" element={
+              <Layout>
+                <PostJob />
+              </Layout>
+            } />
+            <Route path="/profile" element={
+              <Layout>
+                <Profile />
               </Layout>
             } />
             
