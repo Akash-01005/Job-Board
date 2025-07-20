@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:6
+    ports: ['27017:27017']
+    volumes:
+      - mongo-data:/data/db
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.3
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports: ['9200:9200']
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  backend:
+    build: ./server
+    ports: ['4000:4000']
+    depends_on: ['mongo', 'elasticsearch', 'rabbitmq']
+
+  frontend:
+    build: ./client
+    ports: ['3000:80']
+    depends_on: ['backend']
+
+volumes:
+  mongo-data: 
